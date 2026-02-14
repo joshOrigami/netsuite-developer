@@ -1,0 +1,22 @@
+# Dual License Notice
+
+This repository contains two components with distinct licenses.
+
+## SKILL.md
+Licensed under the Creative Commons Attribution 4.0 International License (CC-BY-4.0).
+https://creativecommons.org/licenses/by/4.0/
+
+## query_metadata.py
+Licensed under the MIT License.
+
+MIT License
+
+Copyright (c) 2026 Joshua Meiri, Origami Precision, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
