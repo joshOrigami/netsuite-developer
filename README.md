@@ -1,4 +1,9 @@
 # netsuite-developer  
+
+<p align="center">
+  <img src="assets/netsuite-developer-logo.png" width="120" alt="netsuite-developer logo" />
+</p>
+
 ![License: CC-BY-4.0](https://img.shields.io/badge/SKILL-License_CC--BY--4.0-lightgrey.svg)
 ![License: MIT](https://img.shields.io/badge/Tool-License_MIT-yellow.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
