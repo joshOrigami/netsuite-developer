@@ -235,3 +235,13 @@ Joshua Meiri
 Origami Precision, LLC  
 
 Built for disciplined, deterministic NetSuite AI engineering.
+
+---
+
+## Attribution
+
+Third-party trademarks mentioned in this document are the property of their respective owners.
+
+NetSuite and Oracle are registered trademarks of Oracle Corporation.  
+Codex is a trademark of OpenAI.  
+Visual Studio Code and Microsoft are trademarks of Microsoft Corporation.
