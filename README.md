@@ -164,6 +164,19 @@ It is an enforcement mechanism — not the core identity of the project.
 
 ---
 
+## Bring Your Own Metadata
+
+This project is provider-neutral.
+
+If you have a NetSuite schema export that conforms to the metadata contract, the skill can use it to enforce deterministic behavior.
+
+- Contract: `docs/BYO_METADATA.md`
+- The helper reads from: `.netsuite-metadata/<ENV>/`
+
+[origami lens](https://origamilens.com/) can export a compatible schema package, but the skill works with any compatible schema export.
+
+---
+
 ## Installation
 
 ### Requirements
