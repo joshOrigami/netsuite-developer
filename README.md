@@ -68,6 +68,18 @@ When active, this skill enforces:
 
 This is deterministic AI behavior — not prompt tuning.
 
+### Operational Readiness Requirements
+
+In addition to code discipline, the skill now requires:
+
+- UAT Guides for non-trivial changes
+- Installation / Deployment / Admin Guides
+- Explicit error identification and handling documentation
+- End User Guides when behavior changes impact users
+- Rollback considerations
+
+Engineering completeness includes operational clarity.
+
 ---
 
 ## Metadata Is a Tool, Not the Product
