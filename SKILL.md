@@ -559,6 +559,158 @@ Before marking code production ready:
 
 ---
 
+# Documentation and Operational Readiness Discipline
+
+Code generation is not complete until operational documentation exists.
+
+For any non-trivial development (scripts, integrations, SuiteQL reporting logic, SDF deployments), the output must include structured operational documentation.
+
+This documentation is part of the engineering deliverable.
+
+---
+
+## Required Documentation Artifacts
+
+When generating production-ready code, include:
+
+1. UAT Guide
+2. Installation / Deployment / Admin Guide
+3. End User Guide (if applicable)
+
+If the change is internal-only infrastructure, explicitly state that an End User Guide is not required.
+
+---
+
+## 1. UAT Guide
+
+The UAT Guide must include:
+
+- Target environment
+- Role used for testing
+- Preconditions
+- Step-by-step validation instructions
+- Expected results
+- Edge cases
+- Negative test scenarios
+- Multi-subsidiary and multi-currency considerations (if applicable)
+- Governance expectations
+- Rollback validation steps
+
+The UAT guide must be actionable by a QA analyst without needing the developer present.
+
+---
+
+## 2. Installation / Deployment / Admin Guide
+
+The Installation Guide must include:
+
+- Script type
+- Deployment ID
+- Execution context
+- Required roles and permissions
+- Required features enabled
+- Dependencies
+- SDF project validation steps
+- Deployment steps (SB → QA → PROD)
+- Error identification guidance
+- Error log review path
+- Error notification configuration
+- Summary log review expectations
+- Governance monitoring expectations
+- Post-deployment verification checklist
+- Rollback procedure
+
+Error handling guidance must include:
+
+- Where errors are logged
+- How they are surfaced
+- Who is notified
+- How to trace failures
+- What to do if governance limits are exceeded
+
+Never assume the administrator knows where to look.
+
+---
+
+## 3. End User Guide (If Applicable)
+
+Required when:
+
+- UI behavior changes
+- New fields appear
+- Workflows change
+- Saved searches or reports are introduced
+- New integrations alter user behavior
+
+Must include:
+
+- What changed
+- Who is affected
+- Step-by-step usage instructions
+- Screens impacted
+- Expected behavior
+- Known limitations
+- Frequently misunderstood behaviors
+
+If no end user impact exists, explicitly state:
+
+"No end-user documentation required. Change is system-level only."
+
+---
+
+## Documentation Output Structure
+
+Documentation must be clearly separated from code and structured with headings:
+
+- ## UAT Guide
+- ## Installation and Deployment Guide
+- ## End User Guide
+
+Documentation must not be embedded inside code comments.
+
+Documentation is part of the deliverable.
+
+---
+
+## Operational Discipline Rule
+
+Code is not considered production-ready unless:
+
+- QA validation steps exist
+- Deployment instructions exist
+- Error identification guidance exists
+- Rollback path exists
+- User impact is documented or explicitly ruled out
+
+Engineering completeness includes operational clarity.
+
+---
+
+## Metadata Interaction Rule
+
+If metadata is available:
+
+- Reference environment explicitly in documentation.
+- Confirm fields referenced in UAT steps exist.
+- Confirm deployment contexts align with metadata environment.
+
+Never generate documentation that contradicts selected metadata environment.
+
+---
+
+## Governance Awareness in Documentation
+
+All UAT and Deployment guides must include:
+
+- Governance unit expectations
+- Execution context considerations
+- Scheduled vs User Event vs Map/Reduce implications
+- Performance considerations in multi-entity environments
+
+Operational documentation must reflect real NetSuite constraints.
+
+---
+
 # Final Behavioral Rules
 
 If metadata exists:
