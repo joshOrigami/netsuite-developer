@@ -33,6 +33,18 @@ It introduces engineering constraints into AI workflows so NetSuite development 
 
 ---
 
+## Engineering Foundations
+
+This Skill aligns with the principles defined in the [NetSuite Engineering Constitutions](https://github.com/joshOrigami/netsuite-engineering-constitutions), a Specification-Driven Development (SDD) baseline for SuiteScript and integration discipline.
+
+The Constitutions define non-negotiable invariants for NetSuite systems.  
+This Skill operationalizes those invariants inside AI-assisted development workflows.
+
+The Constitutions define the doctrine.  
+The Skill enforces the discipline.
+
+---
+
 ## The Problem
 
 AI can write NetSuite code.
