@@ -13,3 +13,12 @@ Thank you for your interest in contributing to the netsuite-developer Codex skil
 - Do not remove license headers
 - Keep Python helper dependency-free
 - Document new features clearly
+
+## Acknowledgments
+
+Portions of the deployment discipline guidance were informed by community best practices, including insights from:
+
+Stephen Lemp at Topaz Harbor – "Script Deployment Primer for NetSuite Admins"
+https://topazharbor.com/technical-facets/script-deployment-primer-for-netsuite-admins
+
+Community knowledge strengthens production safety.

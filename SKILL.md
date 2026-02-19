@@ -619,6 +619,12 @@ The Installation Guide must include:
 - Governance monitoring expectations
 - Post-deployment verification checklist
 - Rollback procedure
+- Confirm deployment status per environment (Testing in SB/QA, Released in PROD).
+- Confirm audience restrictions applied correctly.
+- Confirm Execute As Role aligns with least privilege principle.
+- Confirm event type and execution context filters configured correctly.
+- Confirm concurrency and queue settings for scheduled scripts.
+- Confirm log level appropriate for production.
 
 Error handling guidance must include:
 
@@ -627,6 +633,71 @@ Error handling guidance must include:
 - Who is notified
 - How to trace failures
 - What to do if governance limits are exceeded
+
+### Deployment Status Rule
+
+Deployment status must be explicitly documented:
+
+- Testing: Only script owner executes.
+- Released: Available to permitted audience.
+
+Never promote directly to Released without documented QA validation.
+State intended status per environment (SB, QA, PROD).
+
+### Audience Configuration Rule
+
+Deployment documentation must explicitly state:
+
+- Roles permitted
+- Departments restricted (if applicable)
+- Employees restricted (if applicable)
+- Groups restricted (if applicable)
+
+Do not leave audience overly broad.
+If deployment is intentionally global, justify it.
+
+### Execute As Role Rule
+
+Deployment must explicitly document:
+
+- Execute As Role
+- Rationale for selected role
+- Whether elevated privileges are required
+
+Avoid unnecessary Administrator execution.
+Privilege scope must match business requirement.
+
+### Event Context Filtering Rule
+
+For User Events and Client Scripts:
+
+- Explicitly document event types enabled (create, edit, delete, view).
+- Explicitly document execution contexts enabled (UI, Web Services, CSV, etc.).
+- Avoid enabling unnecessary contexts.
+
+Unfiltered context can cause duplicate execution or unintended behavior.
+
+### Concurrency and Queue Configuration Rule
+
+For Scheduled and Map/Reduce deployments:
+
+- Document concurrency level.
+- Document queue selection.
+- Document rescheduling behavior.
+- Document expected execution frequency.
+
+Concurrency settings must align with governance and integration safety.
+
+### Deployment Logging Configuration Rule
+
+Deployment documentation must state:
+
+- Intended log level for production.
+- Whether debug logging is disabled.
+- Log retention expectations.
+
+Production deployments must not rely on excessive debug logging.
+
 
 Never assume the administrator knows where to look.
 
