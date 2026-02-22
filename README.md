@@ -177,7 +177,9 @@ Engineering constraints
 ```mermaid
 ---
 config:
-  layout: dagre
+  layout: elk
+  look: neo
+  theme: redux
 title: netsuite-developer skill
 ---
 flowchart LR
@@ -204,12 +206,14 @@ flowchart LR
         M
         GBOX
   end
-    B --> C
-    C --> D & E
+    B -..- C
+    C -..- D & E
     F --> G & H & I & J
     A -- features --> A0
-    A0 --> A1
-    A --> B & F
+    A0 -..- A1
+    A -- metasdata --> B 
+    A -- prompt --> F
+    A1 -- additional rules --> F
     B -- validated schema --> F
 
     style A0 fill:#FFF9C4
