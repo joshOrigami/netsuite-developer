@@ -235,6 +235,149 @@ Rules:
 
 ---
 
+## Optional Modules
+
+This Skill supports optional feature modules stored in:
+
+- `docs/modules/`
+
+Feature enablement can be declared per environment using:
+
+- `docs/modules/netsuite-features.json`
+
+### How to Apply Optional Modules
+
+1. Ask for the target environment if not provided.
+2. Look up the matching `env_key` entry in `docs/modules/netsuite-features.json`.
+3. For each feature module:
+   - If the feature key exists and is `true`, apply the module rules.
+   - If the feature key exists and is `false`, do not apply the module rules.
+   - If the feature key is missing, treat the feature state as unknown and ask only if the current task touches that feature surface area.
+
+Absence of a feature key never implies `false`.
+
+### Module Map (Examples)
+
+Feature modules are convention-based and extensible.
+
+If a feature flag is set to `true` in `docs/modules/netsuite-features.json`,
+the corresponding module file in `docs/modules/` should be applied.
+
+Module Naming Convention:
+
+- Feature key: lowercase, snake_case
+- Module file: same name as feature key
+- Location: docs/modules/<feature>.md
+
+Examples:
+
+- `"multibook": true` → apply `docs/modules/multibook.md`
+- `"arm": true` → apply `docs/modules/arm.md`
+- `"suitebilling": true` → apply `docs/modules/suitebilling.md`
+
+Developers may add additional feature modules following the same pattern:
+
+- Feature key in `netsuite-features.json`
+- Matching module file in `docs/modules/`
+- Module defines additional invariants and validation rules
+
+The core Skill does not restrict module creation.
+
+### Environment Mapping
+
+The user must provide an environment name that matches an `env_key` value (for example: `SB1`, `QA`, `PROD`). If the environment is not found in the features file, treat all feature states as unknown and ask only when relevant.
+
+### Output Requirements When a Module Applies
+
+When a module applies, the generated output must include:
+
+- Feature-specific assumptions and invariants
+- Feature-specific QA and UAT validation steps
+- Any deployment or admin considerations introduced by the feature
+
+### Module Applicability Declaration
+
+When optional feature modules are enabled for the selected environment,
+every non-trivial script must include a Module Applicability block.
+
+This declaration clarifies whether the script:
+
+- Is impacted by the enabled module
+- Is intentionally not impacted by the enabled module
+- Requires validation under the enabled module
+
+This applies even if no functional defect exists.
+
+The purpose is to eliminate ambiguity and prevent assumption drift.
+
+---
+
+#### Required Format (Script Header Comment)
+
+Each script must include a structured comment block:
+
+```javascript
+/**
+ * Module Applicability
+ *
+ * Developed In:
+ *   - Account: <ACCOUNT_ENV_USED_FOR_DEVELOPMENT>
+ *
+ * Intended Deployment:
+ *   - Account: <TARGET_ACCOUNT_ENV>
+ *
+ * Multi-Book:
+ *   - Applicable: Yes | No
+ *   - Rationale:
+ *   - Validation Notes:
+  *
+ * SuiteBilling:
+ *   - Applicable: Yes | No
+ *   - Rationale:
+ *   - Validation Notes:
+ *
+ * ...
+ *
+ */
+```
+
+---
+
+#### Rules
+
+1. If a module is enabled in `netsuite-features.json`, it must be declared.
+2. If not applicable, state why.
+3. If applicable, reference:
+   - impacted logic
+   - validation steps
+   - deployment considerations
+4. Silence is non-compliant when modules are enabled.
+
+---
+
+#### Severity Classification for Module Review
+
+- High: Functional violation of enabled module invariant.
+- Medium: Potential behavioral ambiguity under enabled module.
+- Low: Missing explicit module applicability declaration.
+
+---
+
+#### Environment Handling Guidance
+
+Module applicability is feature-based, not environment-ID-based.
+
+Do not duplicate blocks per environment.
+
+Use:
+
+- Developed In → environment used during implementation
+- Intended Deployment → target production environment
+
+The declaration provides traceability without hardcoding environment logic into the script.
+
+---
+
 # Code Structure and Documentation Discipline
 
 All generated code must be self-documenting and maintainable.
@@ -305,6 +448,21 @@ try {
 }
 
 Comments must explain WHY the logic exists, not restate the code.
+
+---
+
+# Plug-in Implementation Rule
+
+If implementing or modifying a NetSuite Plug-in:
+
+- Explicitly declare the plug-in type.
+- Document lifecycle impact.
+- Document upgrade considerations.
+- Document interaction with native NetSuite behavior.
+- Include regression validation steps.
+- Apply elevated deployment review discipline.
+
+Plug-ins modify platform behavior and require stricter safeguards.
 
 ---
 

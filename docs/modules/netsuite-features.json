@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "defaults": {
+    "assume_unknown_when_missing": true
+  },
+  "environments": [
+    {
+      "env_key": "SB1",
+      "account_id": "123456_SB1",
+      "features": {
+        "multibook": true,
+        "arm": true,
+        "suitebilling": true,
+        "fiscalcalendars": true
+      }
+    },
+    {
+      "env_key": "PROD",
+      "account_id": "123456",
+      "features": {
+        "multibook": true,
+        "arm": true,
+        "suitebilling": false,
+        "fiscalcalendars": true
+      }
+    }
+  ]
+}

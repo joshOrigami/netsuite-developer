@@ -102,6 +102,8 @@ Metadata becomes one enforcement mechanism within the system.
 
 The skill governs behavior.
 
+### Bring Your Own Metadata
+
 The metadata provider can be:
 
 - [origami lens](https://origamilens.com) by Origami Precision, LLC
@@ -110,6 +112,32 @@ The metadata provider can be:
 
 The skill works independently.  
 Metadata strengthens enforcement.
+
+---
+
+## Bring Your Own Modules
+
+This project supports optional feature modules that extend the core Skill.
+
+Modules live under:
+
+    docs/modules/
+
+Feature enablement is declared in:
+
+    docs/modules/netsuite-features.json
+
+Modules may be:
+
+- Public and committed to this repository
+- Proprietary and internal to your organization
+- Client-specific and not shared publicly
+
+See:
+
+    docs/BYO_MODULE.md
+
+When modules are enabled for an environment, non-trivial scripts must include a Module Applicability declaration.
 
 ---
 
@@ -153,19 +181,22 @@ config:
 title: netsuite-developer skill
 ---
 flowchart LR
- subgraph M["Metadata validation"]
+ subgraph M["Metadata validation and modules"]
     direction TB
         B["Metadata Helper tools/query_metadata.py"]
         C[".netsuite-metadata/ENV"]
         D["record_index.json"]
         E["records JSON files"]
+        A0["Modules Enabled<br>docs/modules/netsuite-features.json"]
+        A1["Modules<br>/docs/modules/*.md"]
   end
  subgraph GBOX["Generation"]
     direction TB
-        F["Generation engine"]
+        F["Codex Generation engine"]
         G["SuiteScript 2.x"]
         H["SuiteQL"]
         I["Recommendations"]
+        J["Documentation"]
   end
  subgraph COD["Codex in VSCode workspace"]
     direction LR
@@ -175,11 +206,22 @@ flowchart LR
   end
     B --> C
     C --> D & E
-    F --> G & H & I
+    F --> G & H & I & J
+    A -- features --> A0
+    A0 --> A1
     A --> B & F
-    B L_B_F_0@-. validated schema .-> F
+    B -- validated schema --> F
 
-    L_B_F_0@{ animation: slow }
+    style A0 fill:#FFF9C4
+    style B fill:#FFF9C4
+    style J fill:#C8E6C9
+    style I fill:#C8E6C9
+    style H fill:#C8E6C9
+    style G fill:#C8E6C9
+    style F fill:#D6FFFF
+    style GBOX fill:#AAAAAA
+    style M fill:#AAAAAA
+    style A fill:#D6FFFF
 ```
 
 The metadata helper is folded into the constraint system.
@@ -223,7 +265,11 @@ If you have a NetSuite schema export that conforms to the metadata contract, the
 
    `<project-root>/.netsuite-metadata/<ENV>/`
 
-4. Restart VS Code
+4. Add modules to:
+
+   `<project-root>/docs/modules/`
+
+5. Restart VS Code
 
 ---
 

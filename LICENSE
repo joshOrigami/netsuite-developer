@@ -2,11 +2,24 @@
 
 This repository contains two components with distinct licenses.
 
-## SKILL.md
+## Skill and Documentation
+
+Licensed under:
+
+Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+Applies to:
+
+- SKILL.md
+- docs/BYO_METADATA.md
+- docs/BYO_MODULE.md
+- docs/modules/*.md
+- netsuite-features.json format specification
+
 Licensed under the Creative Commons Attribution 4.0 International License (CC-BY-4.0).
 https://creativecommons.org/licenses/by/4.0/
 
-## query_metadata.py
+## Tooling Code: query_metadata.py
 Licensed under the MIT License.
 
 MIT License
