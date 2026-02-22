@@ -19,6 +19,8 @@ Each module:
 - Adds deployment and admin guidance
 - Expands enforcement when feature is enabled
 
+A module does not have to strictly be a NetSuite feature, it can be a localization or even an internal standard.
+
 ---
 
 ## Feature Enablement File
