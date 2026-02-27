@@ -64,6 +64,9 @@ https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_1560446363
 REST Record Service Guide  
 https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_1540810168.html  
 
+SuiteQL
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_156257770590.html
+
 When in doubt, prefer these references over memory.
 Do not invent undocumented behavior.
 
