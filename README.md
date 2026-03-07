@@ -31,7 +31,7 @@ This **Codex** Skill enforces deterministic behavior when generating:
 
 It introduces engineering constraints into AI workflows so NetSuite development remains safe, structured, and environment-aware.
 
-Note: This skill can be used with most AI tools that run in VSCode or are clones for VSCode. For instance, if you are using Google's **Antigravity**, just move the `netsuite-developer` skill from `.codex/skills` to `.agents/skills`. 
+Note: This skill can be used with most AI tools that run in VSCode or are clones of VSCode. For instance, if you are using Google's **Antigravity**, just move the `netsuite-developer` skill from `.codex/skills` to `.agents/skills`. 
 
 ---
 
