@@ -42,6 +42,42 @@ If metadata is not available, ask before guessing.
 
 ---
 
+# Governance & Performance Anti-Patterns ("Gatekeeper" Rules)
+
+The following patterns are strictly forbidden and will be blocked by automated repository filters (Semgrep/CI). You must architect solutions that avoid these traps. If a unique business case requires a deviation, you MUST flag this during the SDD 'Clarify' phase before generating code.
+
+## 1. Zero-Tolerance: Database Calls in Loops ($O(n^2)$ Trap)
+* **Rule:** Never place `record.load()`, `record.save()`, `record.submitFields()`, `search.run()`, or `query.run()` inside any loop structure (`for`, `while`, `forEach`).
+* **Rationale:** This creates quadratic governance consumption. Even a loop limited to "3 items" is an anti-pattern; it signals a failure to use collection-based processing or Map/Reduce.
+* **Override Protocol:** If a small, fixed-limit loop is truly necessary, the code MUST include a comment: `// @skip-gatekeeper: [Reasoning]`.
+
+## 2. Optimization: Prefer `submitFields` for Body Updates
+* **Rule:** If updating ONLY body fields (no sublists), use `N/record.submitFields` instead of a full `load` and `save` cycle.
+* **Rationale:** `submitFields` is 10x faster and uses ~2 units vs 10+ for a full load. Loading a 2,000-line Sales Order to change one field is an architectural failure.
+
+## 3. Scalability: No Unbounded Searches
+* **Rule:** Never use `search.run().each()` without an explicit exit strategy, `.getRange()`, or pagination.
+* **Rationale:** Unbounded searches are "Silent Killers." They pass in Sandbox with 10 records but crash in Production with 50,000 records.
+
+## 4. Security: SuiteQL Injection Prevention
+* **Rule:** Never use string concatenation to build SuiteQL queries with user-provided variables.
+* **Rationale:** This creates a SQL Injection (SQLi) risk. You MUST use the `params` property in `query.runSuiteQL` to safely bind variables.
+
+## 5. Portability: No Hardcoded Internal IDs
+* **Rule:** Never use numeric internal IDs (e.g., `id: 123`) for records, roles, or scripts. 
+* **Rationale:** Internal IDs are environment-specific. Hardcoding `123` works in Sandbox but breaks in Production. Use Script Parameters or Script IDs (e.g., `custrecord_op_tier`).
+
+## 6. Reliability: Essential `afterSubmit` Safety Net
+* **Rule:** Every `afterSubmit` entry point MUST be wrapped in a root `try/catch` block.
+* **Rationale:** An unhandled error in `afterSubmit` can block the entire record from saving (even if the UI says 'Success'), resulting in catastrophic data loss.
+
+## 7. Frontend & Portal Security (The "Safe-Include" Rule)
+* **Rule:** Any external JavaScript library loaded via CDN (e.g., jQuery, Chart.js, Lodash) MUST include `integrity` and `crossorigin` attributes.
+* **Rationale:** This prevents "Supply Chain Attacks." If a 3rd-party CDN is hacked, the `integrity` hash acts as a fingerprint; if the file changes even by one character, the browser will refuse to execute it, protecting the NetSuite account.
+* **Instruction:** When generating HTML for Suitelets or Portals, always fetch the SRI hash for the specific version of the library being used.
+
+---
+
 # Canonical References
 
 When authoritative clarification is required, prefer the following official Oracle documentation.
@@ -970,6 +1006,9 @@ This skill enforces disciplined NetSuite engineering aligned with:
 - Oracle official best practices
 - Schema-aware development
 - Production-safe deployment
+
+If a requirement necessitates an Anti-Pattern (e.g., a database call in a loop), you must flag this in the 'Clarify' step. 
+Explain the risk to the user and suggest a 'Best Practice' alternative (like Map/Reduce) before proceeding with the sub-optimal code.
 
 ---
 
