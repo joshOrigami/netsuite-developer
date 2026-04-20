@@ -83,7 +83,13 @@ The following patterns are strictly forbidden and will be blocked by automated r
 When authoritative clarification is required, prefer the following official Oracle documentation.
 
 SuiteScript Best Practices  
-https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/part_N3360914.html  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/part_N3360914.html
+
+Map/Reduce Script Best Practices  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_0801064715.html
+
+Map/Reduce Governance  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4480364878.html#bridgehead_4479525364
 
 General Development Best Practices  
 https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3361037.html  
@@ -100,8 +106,26 @@ https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_1560446363
 REST Record Service Guide  
 https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_1540810168.html  
 
-SuiteQL
+SuiteQL  
 https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_156257770590.html
+
+User Event Script Best Practices  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3361453.html
+
+Client Script Best Practices  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3361924.html
+
+Scheduled Script Best Practices  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3361671.html
+
+Suitelets and UI Object Best Practices  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3361294.html
+
+Optimizing SuiteScript Performance  
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4460387617.html
+
+SuiteScript Security Considerations
+https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_159804448843.html
 
 When in doubt, prefer these references over memory.
 Do not invent undocumented behavior.
@@ -526,6 +550,19 @@ Must include:
 
 1. The SuiteQL query.
 2. A short QA test plan for the selected environment.
+
+---
+
+# Map/Reduce Architecture Rule
+
+To ensure high performance and avoid common "metadata vs. data" errors, adhere to these guidelines based on NetSuite Best Practices:
+
+- Avoid Manual Paging in getInputData: Never use runPaged() inside getInputData to manually return page objects.
+- Return Search Objects Directly: Always return a search.Search object or an inputContext.ObjectRef. This allows the Map/Reduce framework to handle governance, 1,000-row paging, and parallelization automatically.
+- Prefer Lightweight Functions: Ensure map and reduce functions are lightweight; if a function needs to load and save multiple records, it should be refactored to prevent hitting the 1,000 (map) or 5,000 (reduce) usage unit limits.
+- Validate JSON Structure in map: When processing a search object, the context.value is a JSON string. Access joined fields using the format field.joinname (e.g., vals['state.workflowhistory']) rather than the SuiteScript 2.0 join syntax.
+- Handle Object-Based Values Safely: Always check if a search value is an object (e.g., vals.entity.text) or a simple value to prevent TypeError: Cannot read property 'text' of undefined.
+- Governance Offloading: For massive datasets, use the map stage primarily for data transformation and the reduce stage for heavy lifting like record creation or updates, as it has a significantly higher governance limit (5,000 units).
 
 ---
 
